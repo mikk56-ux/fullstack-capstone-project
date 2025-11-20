@@ -9,7 +9,18 @@ const pinoHttp = require('pino-http');
 const logger = require('./logger');
 
 const app = express();
-app.use("*", cors());
+
+// FIXED CORS CONFIGURATION - ALLOW BOTH LOCALHOST AND PROXY URL
+app.use(cors({
+  origin: [
+    "http://localhost:3000", 
+    "https://abhinavnbinu-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(pinoHttp({ logger }));
 
