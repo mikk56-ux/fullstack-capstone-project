@@ -10,7 +10,7 @@ const logger = require('./logger');
 
 const app = express();
 
-// FIXED CORS CONFIGURATION - ALLOW BOTH LOCALHOST AND PROXY URL
+// CORS Configuration
 app.use(cors({
   origin: [
     "http://localhost:3000", 
@@ -24,7 +24,7 @@ app.use(cors({
 app.use(express.json());
 app.use(pinoHttp({ logger }));
 
-const port = 3060;
+const port = process.env.PORT || 3060;
 
 // Connect to MongoDB once
 connectToDatabase()
@@ -34,12 +34,14 @@ connectToDatabase()
 // Route files
 const giftRoutes = require('./routes/giftRoutes');
 const searchRoutes = require('./routes/searchRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 // Use routes
 app.use('/api/gifts', giftRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/auth', authRoutes);
 
-// Root
+// Root endpoint
 app.get("/", (req, res) => {
     res.send("Inside the server");
 });
