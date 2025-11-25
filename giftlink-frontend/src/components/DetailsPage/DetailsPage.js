@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './DetailsPage.css';
-import {urlConfig} from '../../config';
+import { urlConfig } from '../../config'; 
 
 function DetailsPage() {
     const navigate = useNavigate();
@@ -13,18 +13,18 @@ function DetailsPage() {
     useEffect(() => {
         const authenticationToken = sessionStorage.getItem('auth-token');
         if (!authenticationToken) {
-            navigate('/app/login');  // Task 1
+            // ✅ Task 1: Check for authentication and redirect
+            navigate('/app/login');
+            return;
         }
 
+        // ✅ Task 2: Fetch gift details
         const fetchGift = async () => {
             try {
-                const url = `${urlConfig.backendUrl}/api/gifts/${productId}`; // Task 2
-                const response = await fetch(url);
-
+                const response = await fetch(`${urlConfig.backendUrl}/api/gifts/${productId}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-
                 const data = await response.json();
                 setGift(data);
             } catch (error) {
@@ -35,13 +35,17 @@ function DetailsPage() {
         };
 
         fetchGift();
-        window.scrollTo(0, 0); // Task 3
-    }, [productId, navigate]);
 
+        // ✅ Task 3: Scroll to top on component mount
+        window.scrollTo(0, 0);
+    }, [navigate, productId]);
+
+    // ✅ Task 4: Handle back click
     const handleBackClick = () => {
-        navigate(-1); // Task 4
+        navigate(-1);
     };
 
+    // Hardcoded comments
     const comments = [
         { author: "John Doe", comment: "I would like this!" },
         { author: "Jane Smith", comment: "Just DMed you." },
@@ -57,21 +61,21 @@ function DetailsPage() {
     return (
         <div className="container mt-5">
             <button className="btn btn-secondary mb-3" onClick={handleBackClick}>Back</button>
-
             <div className="card product-details-card">
                 <div className="card-header text-white">
                     <h2 className="details-title">{gift.name}</h2>
                 </div>
-
                 <div className="card-body">
                     <div className="image-placeholder-large">
                         {gift.image ? (
-                            <img src={gift.image} alt={gift.name} className="product-image-large" /> // Task 5
+                            // ✅ Task 5: Display gift image
+                            <img src={gift.image} alt={gift.name} className="product-image-large" />
                         ) : (
                             <div className="no-image-available-large">No Image Available</div>
                         )}
                     </div>
 
+                    {/* ✅ Task 6: Display gift details */}
                     <p><strong>Category:</strong> {gift.category}</p>
                     <p><strong>Condition:</strong> {gift.condition}</p>
                     <p><strong>Date Added:</strong> {gift.dateAdded}</p>
@@ -82,7 +86,7 @@ function DetailsPage() {
 
             <div className="comments-section mt-4">
                 <h3 className="mb-3">Comments</h3>
-
+                {/* ✅ Task 7: Render comments section */}
                 {comments.map((comment, index) => (
                     <div key={index} className="card mb-3">
                         <div className="card-body">

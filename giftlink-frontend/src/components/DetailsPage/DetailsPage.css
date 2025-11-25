@@ -1,50 +1,79 @@
+/* Task 1: Style for image placeholder */
 .image-placeholder-large {
     width: 100%;
     height: 400px;
     position: relative;
     background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 20px;
 }
 
+/* Task 2: Style for product image */
 .product-image-large {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+/* Task 3: Style for 'no image available' placeholder */
 .no-image-available-large {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ccc;
-    color: #333;
-    font-size: 18px;
+    width: 100%;
+    height: 100%;
+    background-color: #dcdcdc;
+    color: #555;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
 }
 
+/* Task 4: Style for card header */
 .card-header {
     background-color: #007bff;
-    color: #fff;
-    text-align: center;
+    color: #ffffff;
     padding: 15px;
+    text-align: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
 }
 
+/* Task 5: Style for details title */
 .details-title {
-    font-size: 28px;
-    color: #333;
+    font-size: 1.8rem;
     font-weight: bold;
+    color: #ffffff;
+    margin: 0;
 }
 
+/* Task 6: Style for comments section */
 .comments-section {
-    margin-top: 20px;
+    margin-top: 30px;
+}
+
+.comments-section h3 {
+    margin-bottom: 15px;
+    color: #333;
 }
 
 .comments-section .card {
-    margin-bottom: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
-.comments-section .comment-author {
+.comment-author {
+    margin-bottom: 5px;
     font-weight: bold;
+    color: #007bff;
 }
 
-.comments-section .comment-text {
+.comment-text {
+    margin: 0;
     color: #555;
 }

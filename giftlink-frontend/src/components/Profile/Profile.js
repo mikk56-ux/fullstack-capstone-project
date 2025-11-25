@@ -52,46 +52,52 @@ setUpdatedDetails({
 });
 };
 const handleSubmit = async (e) => {
-  e.preventDefault();
+  e.preventDefault(); // prevent default form submission
 
   try {
+    // Get auth token and email from sessionStorage
     const authtoken = sessionStorage.getItem("auth-token");
     const email = sessionStorage.getItem("email");
 
-    if (!authtoken || !email) {
-      navigate("/app/login");
-      return;
-    }
+    // Create payload with updated details
+    const payload = {
+      name: updatedDetails.name, // sending the updated name
+    };
 
-    const payload = { ...updatedDetails };
     const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
-      //Step 1: Task 1
-      //Step 1: Task 2
-      //Step 1: Task 3
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${authtoken}`,
+        "Content-Type": "application/json",
+        "Email": email,
+      },
+      body: JSON.stringify(payload),
     });
 
     if (response.ok) {
-      // Update the user details in session storage
-      //Step 1: Task 4
-      //Step 1: Task 5
-      setUserDetails(updatedDetails);
+      const updatedUser = await response.json();
+
+      // Update AppContext and sessionStorage
+      setUserName(updatedUser.name);
+      sessionStorage.setItem("name", updatedUser.name);
+
+      setUserDetails(updatedUser);
       setEditMode(false);
-      // Display success message to the user
+
+      // Display success message
       setChanged("Name Changed Successfully!");
       setTimeout(() => {
         setChanged("");
-        navigate("/");
+        navigate("/"); // or navigate to profile page
       }, 1000);
-
     } else {
-      // Handle error case
       throw new Error("Failed to update profile");
     }
-  } catch (error) {
-    console.error(error);
-    // Handle error case
+  } catch (e) {
+    console.log("Error updating details: " + e.message);
   }
 };
+
 
 return (
 <div className="profile-container">
